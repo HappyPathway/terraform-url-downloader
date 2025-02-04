@@ -1,7 +1,6 @@
 variables {
   url         = "http://example.com/file.txt"
   output_path = "/tmp/file.txt"
-  cleanup     = true
 }
 
 run "download_file" {
