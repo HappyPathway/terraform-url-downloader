@@ -7,7 +7,7 @@ locals {
 resource "null_resource" "download" {
   provisioner "local-exec" {
     # args.get('url'), args.get('output_path')
-    command = "echo '${jsonencode(local.json_data)}}' | python ${path.module}/download.py '${var.url}' '${var.output_path}'"
+    command = "echo '${jsonencode(local.json_data)}' | python ${path.module}/download.py '${var.url}' '${var.output_path}'"
   }
 
   triggers = {
