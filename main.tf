@@ -1,9 +1,9 @@
-data "external" "download" {
-  program = ["python", "${path.module}/download.py"]
+resource "null_resource" "download" {
+  provisioner "local-exec" {
+    command = "python ${path.module}/download.py '${var.url}' '${var.output_path}'"
+  }
 
-  query = {
-    # arbitrary map from strings to strings, passed
-    # to the external program as the data query.
+  triggers = {
     url         = var.url
     output_path = var.output_path
   }
@@ -12,11 +12,6 @@ data "external" "download" {
 resource "null_resource" "cleanup" {
   count = var.cleanup && var.output_path != null ? 1 : 0
   provisioner "local-exec" {
-    command = "rm ${element(data.local_file.file, count.index)}"
+    command = "rm ${var.output_path}"
   }
-}
-
-data "local_file" "file" {
-  count    = var.output_path != null ? 1 : 0
-  filename = data.external.download.result.output_path
 }
