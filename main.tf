@@ -13,7 +13,7 @@ resource "null_resource" "download" {
 
   provisioner "local-exec" {
     when    = destroy
-    command = "rm ${self.triggers.output_path}"
+    command = "rm ${self.triggers.output_path} || true"
   }
 
   triggers = {
